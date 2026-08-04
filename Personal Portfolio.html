@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jasper Cayunda — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FAFAF7;
+    --bg-alt: #F1F0EA;
+    --ink: #14181F;
+    --ink-soft: #5B6069;
+    --line: #E1DFD8;
+    --signal: #2451C4;
+    --signal-soft: #E7ECFA;
+    --ember: #C77D2E;
+    --ember-soft: #F5E8D8;
+    --radius: 4px;
+    --max: 980px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--signal-soft); color: var(--signal); }
+
+  :focus-visible{
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before{
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--signal);
+    display: inline-block;
+  }
+
+  h1, h2, h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 250, 247, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .logo span{ color: var(--signal); }
+  nav ul{
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+  nav a{
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+  nav a:hover{ color: var(--ink); }
+  .nav-toggle{ display: none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 110px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1{
+    font-size: clamp(40px, 5.6vw, 68px);
+    margin: 22px 0 26px;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--signal);
+  }
+  .hero p.lede{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+  .hero-cta{
+    margin-top: 36px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    padding: 13px 22px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn-primary:hover{ transform: translateY(-1px); background: var(--signal); }
+  .btn-ghost{
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .btn-ghost:hover{ border-color: var(--ink); }
+
+  /* trail signature graphic */
+  .trail-box{
+    aspect-ratio: 1 / 1.05;
+    position: relative;
+  }
+  .trail-box svg{ width: 100%; height: 100%; }
+  .trail-caption{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: -6px;
+    left: 4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .moving-dot{
+      offset-path: path("M20,210 C80,120 130,260 190,150 C240,60 280,200 320,90");
+      animation: travel 7s linear infinite;
+    }
+    @keyframes travel{
+      0%{ offset-distance: 0%; opacity: 0; }
+      8%{ opacity: 1; }
+      92%{ opacity: 1; }
+      100%{ offset-distance: 100%; opacity: 0; }
+    }
+    .pulse-dot{ animation: pulse 2.6s ease-in-out infinite; }
+    @keyframes pulse{
+      0%, 100%{ opacity: 0.35; }
+      50%{ opacity: 1; }
+    }
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 90px 0; }
+  .section-alt{ background: var(--bg-alt); }
+  .section-head{ margin-bottom: 48px; }
+  .section-head h2{ font-size: clamp(28px, 3.4vw, 38px); margin-top: 14px; }
+  .section-head p{ color: var(--ink-soft); max-width: 56ch; margin-top: 14px; font-size: 16px; }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    gap: 56px;
+  }
+  .about-num{
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+  .about-body p{
+    font-size: 19px;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .about-body p + p{ margin-top: 18px; }
+  .about-body em{ font-style: italic; color: var(--signal); }
+
+  /* ---------- skills ---------- */
+  .skills-list{
+    border-top: 1px solid var(--line);
+  }
+  .skill-row{
+    display: grid;
+    grid-template-columns: 220px 1fr 90px;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+  .skill-row:hover{ background: rgba(36,81,196,0.035); }
+  .skill-name{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .skill-desc{
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+  .skill-tag{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--signal);
+    text-align: right;
+    letter-spacing: 0.06em;
+  }
+
+  /* ---------- projects ---------- */
+  .projects-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .project-card{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+  .project-card.featured{
+    grid-column: span 3;
+    background: linear-gradient(135deg, var(--bg) 55%, var(--ember-soft) 130%);
+    border-color: #E7D3B4;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    min-height: auto;
+    padding: 40px;
+  }
+  .project-status{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ember);
+    background: var(--ember-soft);
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .project-card.placeholder .project-status{
+    color: var(--ink-soft);
+    background: var(--bg-alt);
+  }
+  .project-card.featured .project-copy{ flex: 1.3; }
+  .project-card.featured .project-visual{
+    flex: 1;
+    aspect-ratio: 4/3;
+    border: 1px dashed #D9C09A;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ember);
+    text-align: center;
+    padding: 20px;
+  }
+  .project-card h3{
+    font-size: 24px;
+    margin: 14px 0 12px;
+  }
+  .project-card.placeholder h3{
+    color: var(--ink-soft);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .project-card p{
+    color: var(--ink-soft);
+    font-size: 15px;
+    flex: 1;
+  }
+  .project-meta{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .chip{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: var(--ink-soft);
+  }
+  .project-card.placeholder{
+    border-style: dashed;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* ---------- contact ---------- */
+  .contact-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .contact-inner h2{
+    font-size: clamp(32px, 5vw, 54px);
+    max-width: 12ch;
+  }
+  .contact-links{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .contact-links a{
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .contact-links a:hover{ color: var(--signal); border-color: var(--signal); }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+  }
+  .footer-inner{
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .trail-box{ order: -1; max-width: 260px; margin: 0 auto 20px; }
+    .about-grid{ grid-template-columns: 1fr; gap: 20px; }
+    .skill-row{ grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
+    .skill-tag{ text-align: left; }
+    .projects-grid{ grid-template-columns: 1fr; }
+    .project-card.featured{ grid-column: span 1; flex-direction: column; }
+    nav ul{ display: none; }
+    .contact-inner{ flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">Jasper <span>Cayunda</span></div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Toolkit</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Data Analyst — signals in human behavior</div>
+        <h1>Numbers today.<br><em>Behavior</em> tomorrow.</h1>
+        <p class="lede">I aim to study how people move, decide, and act — in areas that interest me.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">See the work</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="trail-box" aria-hidden="true">
+        <svg viewBox="0 0 340 280" fill="none">
+          <path d="M20,210 C80,120 130,260 190,150 C240,60 280,200 320,90" stroke="#E1DFD8" stroke-width="1.5" stroke-dasharray="1 8" stroke-linecap="round"/>
+          <circle cx="20" cy="210" r="4" fill="#5B6069" opacity="0.5"/>
+          <circle cx="80" cy="150" r="3" fill="#5B6069" class="pulse-dot" opacity="0.5"/>
+          <circle cx="130" cy="205" r="4" fill="#2451C4" class="pulse-dot" opacity="0.6"/>
+          <circle cx="190" cy="150" r="3" fill="#5B6069" class="pulse-dot" opacity="0.4"/>
+          <circle cx="245" cy="110" r="4" fill="#2451C4" class="pulse-dot" opacity="0.7"/>
+          <circle cx="320" cy="90" r="5" fill="#C77D2E"/>
+          <circle class="moving-dot" cx="0" cy="0" r="5" fill="#2451C4"/>
+        </svg>
+        <div class="trail-caption">tracking the next move</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section-alt">
+    <div class="wrap about-grid">
+      <div class="about-num">
+        <div class="eyebrow">About</div>
+      </div>
+      <div class="about-body">
+        <p>I'm passionate about the future and human behavior. Using numbers to get closer to both.</p>
+        <p>I want my work to focus on <em>how people will move, act, and decide next</em>. This includes how AI reshapes daily choices, how business strategy responds to shifting demand, and how everyday behavior leaves patterns that data can pick up before the headlines do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">What I work with</div>
+        <h2>Toolkit</h2>
+        <p>The instruments I utilize to move from raw numbers to a decision someone can act on.</p>
+      </div>
+
+      <div class="skills-list">
+        <div class="skill-row">
+          <div class="skill-name">SQL</div>
+          <div class="skill-desc">Querying and shaping raw data — the first step in every analysis.</div>
+          <div class="skill-tag">QUERY</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-name">Power BI <span style="color:var(--ink-soft); font-weight:400; font-size:15px;">(DAX)</span></div>
+          <div class="skill-desc">Building measures and models that explain the "why" behind the trend.</div>
+          <div class="skill-tag">VISUALIZE</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-name">Tableau</div>
+          <div class="skill-desc">Turning findings into visual stories that non-technical audiences trust.</div>
+          <div class="skill-tag">VISUALIZE</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-name">Excel &amp; Sheets</div>
+          <div class="skill-desc">Fast modeling, quick checks, and stakeholder-ready summaries.</div>
+          <div class="skill-tag">MODEL</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-name">R</div>
+          <div class="skill-desc">Statistical analysis and forecasting when the question is "what's next."</div>
+          <div class="skill-tag">FORECAST</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-name">Claude</div>
+          <div class="skill-desc">Enhanced and Exploratory — speeding up exploration, documentation, and pressure-testing ideas.</div>
+          <div class="skill-tag">Enhance</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">What I'm Working On</div>
+        <h2>Projects</h2>
+        <p>Case studies where behavior meets data. More are on the way.</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card featured">
+          <div class="project-copy">
+            <h3>The King's Influence</h3>
+            <p>A look at how LeBron James (The King) shifts the economic standing of the city his team calls home. Tracking local business activity, tourism, and media value across each move of his career.</p>
+            <div class="project-meta">
+              <span class="chip">Sports economics</span>
+              <span class="chip">Time series</span>
+              <span class="chip">Case study</span>
+            </div>
+          </div>
+          <div class="project-visual">Dashboard preview<br>coming soon</div>
+        </div>
+
+        <div class="project-card placeholder">
+          <span class="project-status">In Progress<Progress></Progress></span>
+          <h3>Era of Vibe Coders</h3>
+          <p>In a time where an app can be built with just a single prompt, how many people can now call themselves developers?.</p>
+        </div>
+
+        <div class="project-card placeholder">
+          <span class="project-status">In Progress<Progress></Progress></span>
+          <h3>Lets Play Football</h3>
+          <p>Creating a bot that feeds on live (current) and historical tendencies of players and teams across the NFL. The goal is to stop my streak of losing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact-inner">
+      <h2>Reach Out!</h2>
+      <div class="contact-links">
+        <a href="mailto:jascayunda@gmail.com">jascayunda@gmail.com</a>
+        <a href="https://www.linkedin.com/in/jaspercayunda/" target="_blank" rel="noopener">linkedin.com/in/jaspercayunda</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>Jasper Cayunda</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
