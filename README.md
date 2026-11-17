@@ -3,7 +3,7 @@
 
 A personal portfolio site showcasing my work in data analytics and visualization.
 
-**🔗 Live site:** [https://github.com/JasperCay/Portfolio.git]
+**🔗 Live site:** [https://jaspercayunda.netlify.app/]
 
 ## About
 
