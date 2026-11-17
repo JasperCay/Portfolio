@@ -49,6 +49,11 @@
     margin: 0 auto;
     padding: 0 32px;
   }
+  .wrap-wide{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
 
   .eyebrow{
     font-family: 'JetBrains Mono', monospace;
@@ -302,7 +307,8 @@
     color: var(--ink-soft);
     background: var(--bg-alt);
   }
-  .project-card.featured .project-copy{ flex: 1.3; }
+  .project-card.featured .project-copy{ flex: 1; }
+  .project-card.featured .project-visual-wrap{ flex: 1.2; }
   .project-card.featured .project-visual{
     flex: 1;
     aspect-ratio: 4/3;
@@ -316,6 +322,35 @@
     color: var(--ember);
     text-align: center;
     padding: 20px;
+    overflow: hidden;
+  }
+  .project-visual img{
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 2px;
+    background: transparent;
+  }
+  .project-card.featured .project-visual.has-image{
+    aspect-ratio: auto;
+    border: none;
+    padding: 0;
+    background: transparent;
+  }
+  .project-visual a{
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .project-card p.project-visual-caption{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 10px;
+    text-align: center;
+    flex: none;
   }
   .project-card h3{
     font-size: 24px;
@@ -399,6 +434,7 @@
     .skill-row{ grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
     .skill-tag{ text-align: left; }
     .projects-grid{ grid-template-columns: 1fr; }
+    .wrap-wide{ padding: 0 24px; }
     .project-card.featured{ grid-column: span 1; flex-direction: column; }
     nav ul{ display: none; }
     .contact-inner{ flex-direction: column; align-items: flex-start; }
@@ -427,7 +463,7 @@
       <div>
         <div class="eyebrow">Data Analyst — signals in human behavior</div>
         <h1>Numbers today.<br><em>Behavior</em> tomorrow.</h1>
-        <p class="lede">I aim to study how people move, decide, and act — in areas that interest me.</p>
+        <p class="lede">I aim to study how people move, decide, and act, in areas that interest me.</p>
         <div class="hero-cta">
           <a href="#projects" class="btn btn-primary">See the work</a>
           <a href="#contact" class="btn btn-ghost">Get in touch</a>
@@ -473,22 +509,17 @@
       <div class="skills-list">
         <div class="skill-row">
           <div class="skill-name">SQL</div>
-          <div class="skill-desc">Querying and shaping raw data — the first step in every analysis.</div>
+          <div class="skill-desc">Querying and shaping raw data, the first step in every analysis.</div>
           <div class="skill-tag">QUERY</div>
         </div>
         <div class="skill-row">
-          <div class="skill-name">Power BI <span style="color:var(--ink-soft); font-weight:400; font-size:15px;">(DAX)</span></div>
-          <div class="skill-desc">Building measures and models that explain the "why" behind the trend.</div>
-          <div class="skill-tag">VISUALIZE</div>
-        </div>
-        <div class="skill-row">
-          <div class="skill-name">Tableau</div>
-          <div class="skill-desc">Turning findings into visual stories that non-technical audiences trust.</div>
+          <div class="skill-name">Power BI <span style="color:var(--ink-soft); font-weight:400; font-size:15px;">(DAX)</span> & Tableau</div>
+          <div class="skill-desc">Building measures and turning findings into visual stories that non-technical audiences can understand</div>
           <div class="skill-tag">VISUALIZE</div>
         </div>
         <div class="skill-row">
           <div class="skill-name">Excel &amp; Sheets</div>
-          <div class="skill-desc">Fast modeling, quick checks, and stakeholder-ready summaries.</div>
+          <div class="skill-desc">Fast modeling, quick checks, and tables.</div>
           <div class="skill-tag">MODEL</div>
         </div>
         <div class="skill-row">
@@ -498,15 +529,15 @@
         </div>
         <div class="skill-row">
           <div class="skill-name">Claude</div>
-          <div class="skill-desc">Enhanced and Exploratory — speeding up exploration, documentation, and pressure-testing ideas.</div>
-          <div class="skill-tag">Enhance</div>
+          <div class="skill-desc">Enhanced and Exploratory, speeding up exploration, documentation, and pressure-testing ideas.</div>
+          <div class="skill-tag">ENHANCE</div>
         </div>
       </div>
     </div>
   </section>
 
   <section id="projects" class="section-alt">
-    <div class="wrap">
+    <div class="wrap-wide">
       <div class="section-head">
         <div class="eyebrow">What I'm Working On</div>
         <h2>Projects</h2>
@@ -523,20 +554,28 @@
               <span class="chip">Time series</span>
               <span class="chip">Case study</span>
             </div>
+            <a href="kings-influence.html" class="btn btn-ghost" style="margin-top:20px; width:fit-content;">View findings &rarr;</a>
           </div>
-          <div class="project-visual">Dashboard preview<br>coming soon</div>
+          <div class="project-visual-wrap">
+            <div class="project-visual has-image">
+              <a href="dashboard-preview.png" target="_blank" rel="noopener" title="Click to view full size">
+                <img src="dashboard-preview.png" alt="Power BI dashboard: Cheapest 76ers tickets sold when hosting the Boston Celtics">
+              </a>
+            </div>
+            <p class="project-visual-caption"> The LeBron hype: 76ers Preseason tickets vs. Celtics spiked well above recent pricing for other notable matchups, including Playoffs, with a 26% increase from game 1.</p>
+          </div>
         </div>
 
         <div class="project-card placeholder">
           <span class="project-status">In Progress<Progress></Progress></span>
           <h3>Era of Vibe Coders</h3>
-          <p>In a time where an app can be built with just a single prompt, how many people can now call themselves developers?.</p>
+          <p>In a time where an app can be built with just a single prompt, how many tokens are used during the process and what other variables come into play that determine success?</p>
         </div>
 
         <div class="project-card placeholder">
           <span class="project-status">In Progress<Progress></Progress></span>
-          <h3>Lets Play Football</h3>
-          <p>Creating a bot that feeds on live (current) and historical tendencies of players and teams across the NFL. The goal is to stop my streak of losing.</p>
+          <h3>To the Moon!</h3>
+          <p>A virtual model of a rocket launch (based on the SpaceX Rocket Falcon 9) simulating thrust, mass, and trajectory to see how closely data-driven predictions can track a real flight path.</p>
         </div>
       </div>
     </div>
