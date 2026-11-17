@@ -124,8 +124,8 @@
 
   /* finding block */
   .finding{
-    display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px;
-    padding: 56px 0; border-bottom: 1px solid var(--line);
+  
+    padding: 40px 0; border-bottom: 1px solid var(--line);
     align-items: start;
   }
   .finding:last-child{ border-bottom: none; }
@@ -148,9 +148,45 @@
     font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft);
     text-align: center; padding: 16px;
   }
+  .chart-pair-wide{
+    grid-column: 1 / -1;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    box-sizing: border-box;
+    padding: 0 clamp(20px, 5vw, 64px);
+    margin-top: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .chart-box{
+    flex: 1;
+    min-width: 0;
+    position: relative;
+  }
+  .chart-box img{
+    width: 100%; height: auto; display: block;
+    background: transparent;
+  }
+  .pointer-overlay{
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .pointer-label{
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--signal); background: var(--signal-soft);
+    padding: 5px 10px; border-radius: 20px; white-space: nowrap;
+    transform: translate(-50%, -100%);
+  }
+  @media (max-width: 900px){
+    .chart-pair-wide{ flex-direction: column; }
+  }
   .finding-body h3{ font-size: 24px; margin-bottom: 14px; }
-  .finding-body p{ color: var(--ink-soft); font-size: 15px; }
-  .finding-body p + p{ margin-top: 14px; }
+  .finding-body p{ color: var(--ink-soft); font-size: 15px; max-width: 100ch;}
+  .finding-body p + p{ margin-top: 14px;}
   .finding-body p.placeholder-copy{
     font-style: italic; color: #9A9DA3;
   }
@@ -177,11 +213,74 @@
   .footer-inner a{ text-decoration: none; border-bottom: 1px solid var(--ink-soft); }
   .footer-inner a:hover{ color: var(--signal); border-color: var(--signal); }
 
+  /* calculator */
+  .calc-warning{
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ember); background: var(--ember-soft);
+    padding: 12px 16px; border-radius: var(--radius); margin-bottom: 36px;
+  }
+  .calc-warning::before{ content: "⚠"; font-size: 14px; }
+  .calc-grid{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  }
+  .calc-inputs{
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 32px;
+  }
+  .calc-input-row{ margin-bottom: 28px; }
+  .calc-input-row:last-child{ margin-bottom: 0; }
+  .calc-input-label{
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .calc-input-value{ color: var(--signal); font-weight: 500; }
+  .calc-input-row input[type="range"]{
+    width: 100%; accent-color: var(--signal); height: 4px;
+  }
+  .calc-results{
+    background: var(--bg-alt); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 32px;
+  }
+  .calc-result-block{ margin-bottom: 26px; }
+  .calc-result-block:last-of-type{ margin-bottom: 0; }
+  .calc-result-label{
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .calc-result-value{
+    font-family: 'Fraunces', serif; font-size: 34px; color: var(--ink);
+  }
+  .calc-breakdown{
+    margin-top: 32px; padding-top: 22px; border-top: 1px dashed var(--line);
+  }
+  .calc-breakdown-title{
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  .calc-breakdown-row{
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ink-soft); padding: 6px 0;
+  }
+  .calc-breakdown-row span:last-child{ color: var(--ink); }
+  .calc-methodology{
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line);
+  }
+  .calc-methodology h3{ font-size: 18px; margin-bottom: 12px; }
+  .calc-methodology p{ color: var(--ink-soft); font-size: 14px; }
+  .calc-methodology p.placeholder-copy{ font-style: italic; color: #9A9DA3; margin-top: 8px; }
+
   @media (max-width: 780px){
     .finding{ grid-template-columns: 1fr; }
     .timeline-row{ grid-template-columns: 40px 1fr; }
     .timeline-row .t-years{ grid-column: 2; order: 2; }
     .meta-row{ gap: 24px; }
+    .calc-grid{ grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -232,7 +331,7 @@
           <div class="t-years">2003 – 2010</div>
           <div>
             <div class="t-team">Cleveland Cavaliers</div>
-            <div class="t-note">Placeholder — note on what changed locally during this window.</div>
+            <div class="t-note">The Chosen One</div>
           </div>
         </div>
         <div class="timeline-row">
@@ -240,7 +339,7 @@
           <div class="t-years">2010 – 2014</div>
           <div>
             <div class="t-team">Miami Heat</div>
-            <div class="t-note">Placeholder — note on what changed locally during this window.</div>
+            <div class="t-note">The Heatles</div>
           </div>
         </div>
         <div class="timeline-row">
@@ -248,15 +347,23 @@
           <div class="t-years">2014 – 2018</div>
           <div>
             <div class="t-team">Cleveland Cavaliers</div>
-            <div class="t-note">Placeholder — note on what changed on his return.</div>
+            <div class="t-note">The King Returns</div>
           </div>
         </div>
         <div class="timeline-row">
           <div class="t-num">04</div>
-          <div class="t-years">2018 – present</div>
+          <div class="t-years">2018 – 2026</div>
           <div>
             <div class="t-team">Los Angeles Lakers</div>
-            <div class="t-note">Placeholder — note on what changed locally during this window.</div>
+            <div class="t-note">In Purple and Gold</div>
+          </div>
+        </div>
+         <div class="timeline-row">
+          <div class="t-num">05</div>
+          <div class="t-years">2026 – Present</div>
+          <div>
+            <div class="t-team">Philadelphia 76ers</div>
+            <div class="t-note">The Last Dance?</div>
           </div>
         </div>
       </div>
@@ -267,53 +374,110 @@
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Findings</div>
-        <h2>What the data shows</h2>
-        <p>Three lenses on the same question. Each section below is a slot — swap in the real number, chart, and write-up as each piece of the analysis wraps.</p>
-      </div>
-
+  
       <div class="finding">
-        <div>
-          <div class="finding-stat">
-            <div class="stat-number">+ —%</div>
-            <div class="stat-label">HEADLINE STAT · LOCAL ECONOMY</div>
-          </div>
-          <div class="finding-chart">Chart placeholder<br>(e.g. hotel occupancy or local business revenue, before/after)</div>
-        </div>
+        
         <div class="finding-body">
           <h3>Local economy</h3>
-          <p class="placeholder-copy">Placeholder — summarize what happened to tourism, hotel occupancy, and local business activity around each arrival and departure, and whether the pattern held across all three cities.</p>
-          <span class="source-tag">Source: TBD</span>
+          <p class="placeholder-copy">During his time with each team, outside of the Lakers 2020 season (COVID), there is an increase in the number of employees within the Hospitality and Leisure industry. This includes hotels, dining, and entertainment (sports events included). While this can't be tied down as a direct causation, it is interesting to note that his presence may have led to more money being spent to see him. What's really interesting is the trend for Cleveland where there is a dip around 2010, when James left for the Heat and really spikes up for 2014 when he returned.</p>
         </div>
+
+        <div class="chart-pair-wide" id="chartPairWide">
+          <div class="chart-box">
+            <img id="chartImg1" src="hospitality-per-city.png" alt="Hospitality and leisure labor annual average by city — Cleveland, LA, and Miami">
+          </div>
+          <div class="chart-box">
+            <img id="chartImg2" src="hospitality-cleveland.png" alt="Zoomed-in view of Cleveland's hospitality and leisure labor annual average">
+          </div>
+
+          <svg class="pointer-overlay" id="pointerSvg">
+            <defs>
+              <marker id="arrowhead" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                <path d="M0,0 L9,4.5 L0,9 Z" fill="#2451C4"></path>
+              </marker>
+            </defs>
+            <path id="pointerPath" stroke="#2451C4" stroke-width="2" fill="none"
+                  stroke-dasharray="6 6" marker-end="url(#arrowhead)"></path>
+          </svg>
+        </div>
+        <span class="source-tag">Source: U.S. Bureau of Labor Statistics </span>
       </div>
 
       <div class="finding">
-        <div>
-          <div class="finding-stat">
-            <div class="stat-number">$ —B</div>
-            <div class="stat-label">HEADLINE STAT · TEAM FINANCIALS</div>
-          </div>
-          <div class="finding-chart">Chart placeholder<br>(e.g. team valuation and revenue over time, arrival/departure marked)</div>
-        </div>
         <div class="finding-body">
           <h3>Team financials</h3>
-          <p class="placeholder-copy">Placeholder — summarize the shift in team valuation, revenue, and attendance tied to each move, and how it compares to league-wide growth over the same period.</p>
-          <span class="source-tag">Source: TBD</span>
+          <p class="placeholder-copy">The NBA has grown into a multi-billion-dollar industry over the course of 75 years, much of it thanks to media and broadcasting deals. However, there are very few players that can have just as much of an influence on a team's value. LeBron James is one of them, his name and presence alone can cause ticket sales and prices to skyrocket. As an example, let's take the franchise valuations of every team he has been a part of. The graph below is an index representing growth since LeBron's arrival. There is definite growth across all teams, with his comeback to the Cavs showing the steepest climb, as the "hype" was at its highest</p>
+        </div>
+      </div>
+      <div class="">
+          <div class="chart-box">
+            <img id="chartImg1" src="franchise-value-index.png" alt="Franchise Value Index Across Years Since LeBron James Joined — Cleveland, LA, and Miami">
+          </div>
+      </div>
+      <div class="finding">
+        <div class="finding-body">
+          <p class="placeholder-copy">The heatmap visualizes how each team ranked in total attendance compared to the rest of the league. Darker cells mark a stronger attendance rank. For Cleveland and Miami, the heatmap showcases darker cells, stronger attendance, around LeBron's tenure with each team. As for the Lakers, they have consistently stayed near the top of the league in attendance, likely due to the team's market size and historical success. This remained true during LeBron's time there as well, outside of 2020 due to COVID.</p>
+        </div>
+
+          <div class="chart-box">
+            <img id="chartImg1" src="attendance-heatmap-pbi.png" alt="League attendance rankings Across Years Since LeBron James Joined — Cleveland, LA, and Miami">
+          </div>
+      <div class=""></div>
+          <span class="source-tag">Source: www.statista.com</span>
+          <span class="source-tag">Source: https://www.espn.com/</span>
+      </div>
+
+
+  <section id="calculator">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Interactive model</div>
+        <h2>The LeBron Effect Calculator</h2>
+        <p>A lightweight regression model that estimates the win-odds and valuation lift a superstar arrival could bring, based on the factors this project is testing. Adjust the inputs to see how the prediction shifts.</p>
+      </div>
+
+      <div class="calc-warning">Illustrative coefficients — Data still loading</div>
+
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="calc-input-row">
+            <div class="calc-input-label"><span>Pre-arrival win %</span><span class="calc-input-value" id="winPctVal">45%</span></div>
+            <input type="range" id="winPct" min="20" max="70" value="45" step="1">
+          </div>
+          <div class="calc-input-row">
+            <div class="calc-input-label"><span>Market size index (1 = small, 10 = large)</span><span class="calc-input-value" id="marketVal">5</span></div>
+            <input type="range" id="market" min="1" max="10" value="5" step="1">
+          </div>
+          <div class="calc-input-row">
+            <div class="calc-input-label"><span>Expected tenure (years)</span><span class="calc-input-value" id="tenureVal">4</span></div>
+            <input type="range" id="tenure" min="1" max="10" value="4" step="1">
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <div class="calc-result-block">
+            <div class="calc-result-label">Predicted win-odds lift</div>
+            <div class="calc-result-value" id="winOddsResult">— pts</div>
+          </div>
+          <div class="calc-result-block">
+            <div class="calc-result-label">Predicted valuation lift</div>
+            <div class="calc-result-value" id="valuationResult">— %</div>
+          </div>
+
+          <div class="calc-breakdown">
+            <div class="calc-breakdown-title">How this number is built</div>
+            <div class="calc-breakdown-row"><span>Base rate (intercept)</span><span id="bd-intercept">—</span></div>
+            <div class="calc-breakdown-row"><span>Win % contribution</span><span id="bd-winpct">—</span></div>
+            <div class="calc-breakdown-row"><span>Market size contribution</span><span id="bd-market">—</span></div>
+            <div class="calc-breakdown-row"><span>Tenure contribution</span><span id="bd-tenure">—</span></div>
+          </div>
         </div>
       </div>
 
-      <div class="finding">
-        <div>
-          <div class="finding-stat">
-            <div class="stat-number">— pts</div>
-            <div class="stat-label">HEADLINE STAT · WIN ODDS</div>
-          </div>
-          <div class="finding-chart">Chart placeholder<br>(e.g. championship odds by season, before/after each move)</div>
-        </div>
-        <div class="finding-body">
-          <h3>Win odds</h3>
-          <p class="placeholder-copy">Placeholder — summarize the swing in preseason championship odds tied to each move, and whether odds moved faster than results did.</p>
-          <span class="source-tag">Source: TBD</span>
-        </div>
+      <div class="calc-methodology">
+        <h3>Methodology</h3>
+        <p>This calculator applies a set of linear coefficients to three inputs pulled from the same feature set as the findings above. Once the model is trained in R against the real dataset (team win history, market data, and tenure across LeBron's four moves), the placeholder coefficients here will be replaced with the fitted values, and this note will cover: the algorithm used, which features mattered most, and how the model was validated.</p>
+        <p class="placeholder-copy"></p>
       </div>
     </div>
   </section>
@@ -323,9 +487,10 @@
       <div class="section-head">
         <div class="eyebrow ember">Takeaways</div>
         <h2>So what?</h2>
+        <p>Across every city LeBron James has called home, the numbers tend to move with him. These patterns show correlation, not proof that he caused them, but they suggest that a single star can be a measurable force on a team's value and a city's economy, not just its win column.</p>
       </div>
       <div class="takeaways-box">
-        <p>"Placeholder — once all three lenses are in, this is where the single sentence answer to 'does LeBron move the needle?' goes."</p>
+        <p></p>
       </div>
     </div>
   </section>
@@ -338,5 +503,95 @@
   </div>
 </footer>
 
+<script>
+  // Illustrative placeholder coefficients — replace with real regression
+  // output once the R model is trained on the project dataset.
+  const coefficients = {
+    winOdds: { intercept: 2.0, winPct: 0.15, market: 0.8, tenure: 1.2 },
+    valuation: { intercept: 3.0, winPct: 0.05, market: 1.5, tenure: 0.9 }
+  };
+
+  const winPctInput = document.getElementById('winPct');
+  const marketInput = document.getElementById('market');
+  const tenureInput = document.getElementById('tenure');
+
+  function updateCalculator(){
+    const winPct = Number(winPctInput.value);
+    const market = Number(marketInput.value);
+    const tenure = Number(tenureInput.value);
+
+    document.getElementById('winPctVal').textContent = winPct + '%';
+    document.getElementById('marketVal').textContent = market;
+    document.getElementById('tenureVal').textContent = tenure;
+
+    const wc = coefficients.winOdds;
+    const winPctContribution = winPct * wc.winPct;
+    const marketContribution = market * wc.market;
+    const tenureContribution = tenure * wc.tenure;
+    const winOddsTotal = wc.intercept + winPctContribution + marketContribution + tenureContribution;
+
+    const vc = coefficients.valuation;
+    const valuationTotal = vc.intercept + (winPct * vc.winPct) + (market * vc.market) + (tenure * vc.tenure);
+
+    document.getElementById('winOddsResult').textContent = '+' + winOddsTotal.toFixed(1) + ' pts';
+    document.getElementById('valuationResult').textContent = '+' + valuationTotal.toFixed(1) + '%';
+
+    document.getElementById('bd-intercept').textContent = wc.intercept.toFixed(2);
+    document.getElementById('bd-winpct').textContent = winPct + ' × ' + wc.winPct + ' = ' + winPctContribution.toFixed(2);
+    document.getElementById('bd-market').textContent = market + ' × ' + wc.market + ' = ' + marketContribution.toFixed(2);
+    document.getElementById('bd-tenure').textContent = tenure + ' × ' + wc.tenure + ' = ' + tenureContribution.toFixed(2);
+  }
+
+  [winPctInput, marketInput, tenureInput].forEach(input => {
+    input.addEventListener('input', updateCalculator);
+  });
+
+  updateCalculator();
+</script>
+
+<script>
+  // Draws the arrow from the Cleveland line in the "per city" chart to the
+  // matching spot in the zoomed Cleveland chart. Coordinates below are
+  // fixed FRACTIONS of each image's own natural width/height (measured
+  // once from the source charts), so they stay accurate at any screen
+  // size — we just re-measure the rendered image boxes on load/resize.
+  const START_FRAC = { x: 0.588, y: 0.819 }; // Cleveland line, end of per-city chart
+  const END_FRAC   = { x: 0.156, y: 0.550 }; // matching point in the zoomed chart
+  const SHRINK = 0.22; // pulls both ends inward this % of the total span, to shorten the line
+
+  function updateArrow(){
+    const container = document.getElementById('chartPairWide');
+    const img1 = document.getElementById('chartImg1');
+    const img2 = document.getElementById('chartImg2');
+    const svg = document.getElementById('pointerSvg');
+    const path = document.getElementById('pointerPath');
+    if(!container || !img1 || !img2 || !svg || !path) return;
+    if(!img1.complete || !img2.complete) return;
+
+    const cRect = container.getBoundingClientRect();
+    const r1 = img1.getBoundingClientRect();
+    const r2 = img2.getBoundingClientRect();
+
+    let sx = (r1.left - cRect.left) + START_FRAC.x * r1.width;
+    let sy = (r1.top - cRect.top) + START_FRAC.y * r1.height;
+    let ex = (r2.left - cRect.left) + END_FRAC.x * r2.width;
+    let ey = (r2.top - cRect.top) + END_FRAC.y * r2.height;
+
+    const dx = ex - sx, dy = ey - sy;
+    sx += dx * SHRINK; sy += dy * SHRINK;
+    ex -= dx * SHRINK; ey -= dy * SHRINK;
+
+    const midX = (sx + ex) / 2;
+
+    svg.setAttribute('viewBox', `0 0 ${cRect.width} ${cRect.height}`);
+    path.setAttribute('d', `M ${sx} ${sy} C ${midX} ${sy}, ${midX} ${ey}, ${ex} ${ey}`);
+  }
+
+  window.addEventListener('load', updateArrow);
+  window.addEventListener('resize', updateArrow);
+  document.getElementById('chartImg1')?.addEventListener('load', updateArrow);
+  document.getElementById('chartImg2')?.addEventListener('load', updateArrow);
+  updateArrow();
+</script>
 </body>
 </html>
